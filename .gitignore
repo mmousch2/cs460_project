@@ -1,0 +1,6 @@
+SecureSMS/build/
+SecureSMS/local.properties
+SecureSMS/.gradle
+SecureSMS/.idea/
+.DS_Store
+SecureSMS/.DS_Store
