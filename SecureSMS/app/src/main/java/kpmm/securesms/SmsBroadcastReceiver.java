@@ -18,33 +18,35 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
         Bundle intentExtras = intent.getExtras();
         if (intentExtras != null) {
             Object[] sms = (Object[]) intentExtras.get(SMS_BUNDLE);
+            Encryption newObj = new Encryption();
             String smsMessageStr = "";
             for (int i = 0; i < sms.length; ++i) {
                 SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
 
                 String smsBody = smsMessage.getMessageBody();
 
-                try {
-                    smsBody = newObj.encryptPrivateKey(smsBody, newObj.getPrivateKey());
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(),
-                            "Decryption failed.",
-                            Toast.LENGTH_LONG).show();
-                    e.printStackTrace();
+                if (smsBody.startsWith("!D34DB33F")) {
+
+                } else {
+                    try {
+                        smsBody = newObj.decryptPrivateKey(smsBody, newObj.getPrivateKey());
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(),
+                                "Decryption failed.",
+                                Toast.LENGTH_LONG).show();
+                        e.printStackTrace();
+                    }
+
+                    String address = smsMessage.getOriginatingAddress();
+                    long timeMillis = smsMessage.getTimestampMillis();
+
+                    Date date = new Date(timeMillis);
+                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
+                    String dateText = format.format(date);
+
+                    smsMessageStr += address +" at "+"\t"+ dateText + "\n";
+                    smsMessageStr += smsBody + "\n";
                 }
-
-                String address = smsMessage.getOriginatingAddress();
-                long timeMillis = smsMessage.getTimestampMillis();
-
-                Date date = new Date(timeMillis);
-                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
-                String dateText = format.format(date);
-
-                smsMessageStr += address +" at "+"\t"+ dateText + "\n";
-                smsMessageStr += smsBody + "\n";
-
-                // smsMessageStr += "SMS From: " + address + "\n";
-                // smsMessageStr += smsBody + "\n";
             }
             Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
 

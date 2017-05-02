@@ -32,8 +32,7 @@ public class SendSmsActivity extends Activity {
     protected void sendSMS() {
         String toPhoneNumber = toPhoneNumberET.getText().toString();
         Encryption newObj = new Encryption();
-        String smsMessage = smsMessageET.getText().toString() + newObj.byte2hex(newObj.getPublicKey().getEncoded());
-
+        String smsMessage = smsMessageET.getText().toString();
 
         try {
             smsMessage = newObj.encryptPrivateKey(smsMessage, newObj.getPrivateKey());
@@ -43,6 +42,24 @@ public class SendSmsActivity extends Activity {
                     Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(toPhoneNumber, null, smsMessage, null, null);
+            Toast.makeText(getApplicationContext(), "SMS sent.",
+                    Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(),
+                    "Sending SMS failed.",
+                    Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
+    protected void sendPublicKey() {
+        String toPhoneNumber = toPhoneNumberET.getText().toString();
+        Encryption newObj = new Encryption();
+        String smsMessage = "!D34DB33F" + newObj.byte2hex(newObj.getPublicKey().getEncoded());
 
         try {
             SmsManager smsManager = SmsManager.getDefault();
