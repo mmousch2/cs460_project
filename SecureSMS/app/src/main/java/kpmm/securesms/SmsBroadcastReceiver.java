@@ -31,9 +31,6 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                     try {
                         smsBody = newObj.decryptPrivateKey(smsBody, newObj.getPublicKey());
                     } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(),
-                                "Decryption failed.",
-                                Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
 
