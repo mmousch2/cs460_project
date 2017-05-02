@@ -14,11 +14,11 @@ import javax.crypto.Cipher;
  * Created by KP on 1/5/2017.
  */
 
-class Encryption {
+class RSAEncryption {
     private PublicKey publicKey = null;
     private PrivateKey privateKey = null;
 
-    public Encryption() {
+    public RSAEncryption() {
         try {
             KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
             kpg.initialize(1024);
