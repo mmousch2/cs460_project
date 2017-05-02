@@ -32,7 +32,7 @@ public class AESEncryption {
         try {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, keyspec);
-            encodedBytes = cipher.doFinal(text.getBytes());
+            encodedBytes = cipher.doFinal(text.getBytes("UTF-8"));
             return Base64.encodeToString(encodedBytes, Base64.NO_WRAP);
         } catch (Exception e) {
             System.out.println(e.getStackTrace());
@@ -47,7 +47,7 @@ public class AESEncryption {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, keyspec);
             decodedBytes = cipher.doFinal(Base64.decode(text, Base64.NO_WRAP));
-            return new String(decodedBytes);
+            return new String(decodedBytes, "UTF-8");
         } catch (Exception e) {
             System.out.println(e.getStackTrace());
         }
