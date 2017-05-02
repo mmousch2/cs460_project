@@ -25,60 +25,32 @@ public class AESEncryption {
         }
     }
 
-    public static byte[] encryptKey(String text, SecretKeySpec keyspec) throws Exception {
+    public static String encryptKey(String text, SecretKeySpec keyspec) throws Exception {
         byte[] encodedBytes = null;
         try {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, keyspec);
             encodedBytes = cipher.doFinal(text.getBytes());
-            return encodedBytes;
+            return byte2hex(encodedBytes);
         } catch (Exception e) {
             System.out.println(e.getStackTrace());
         }
 
-        return encodedBytes;
+        return "fail";
     }
-
-//    public static String encryptKey(String text, SecretKeySpec keyspec) throws Exception {
-//        byte[] encodedBytes = null;
-//        try {
-//            Cipher cipher = Cipher.getInstance("AES");
-//            cipher.init(Cipher.ENCRYPT_MODE, keyspec);
-//            encodedBytes = cipher.doFinal(text.getBytes());
-//            return byte2hex(encodedBytes);
-//        } catch (Exception e) {
-//            System.out.println(e.getStackTrace());
-//        }
-//
-//        return "fail";
-//    }
-
-//    public static String decryptKey(String text, SecretKeySpec keyspec) throws Exception {
-//        byte[] decodedBytes = null;
-//        try {
-//            Cipher cipher = Cipher.getInstance("AES");
-//            cipher.init(Cipher.DECRYPT_MODE, keyspec);
-//            decodedBytes = cipher.doFinal(hex2byte(text.getBytes()));
-//            return new String(decodedBytes);
-//        } catch (Exception e) {
-//            System.out.println(e.getStackTrace());
-//        }
-//
-//        return "fail";
-//    }
 
     public static String decryptKey(String text, SecretKeySpec keyspec) throws Exception {
         byte[] decodedBytes = null;
         try {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.DECRYPT_MODE, keyspec);
-            decodedBytes = cipher.doFinal(text.getBytes());
+            decodedBytes = cipher.doFinal(hex2byte(text.getBytes()));
             return new String(decodedBytes);
         } catch (Exception e) {
             System.out.println(e.getStackTrace());
         }
 
-        return "fail";
+        return "fail ded";
     }
 
     public static String byte2hex(byte[] b) {
