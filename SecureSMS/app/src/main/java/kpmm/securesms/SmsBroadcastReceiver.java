@@ -18,32 +18,27 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
         Bundle intentExtras = intent.getExtras();
         if (intentExtras != null) {
             Object[] sms = (Object[]) intentExtras.get(SMS_BUNDLE);
-            Encryption newObj = new Encryption();
             String smsMessageStr = "";
             for (int i = 0; i < sms.length; ++i) {
                 SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
 
                 String smsBody = smsMessage.getMessageBody();
 
-//                if (smsBody.startsWith("!D34DB33F")) {
-//                    String publicKey = substring(9, smsBody.length());
-//                } else {
-                    try {
-                        smsBody = newObj.decryptPrivateKey(smsBody, newObj.getPublicKey());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                try {
+                    smsBody = newObj.encryptPrivateKey(smsBody, newObj.getPrivateKey());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                    String address = smsMessage.getOriginatingAddress();
-                    long timeMillis = smsMessage.getTimestampMillis();
+                String address = smsMessage.getOriginatingAddress();
+                long timeMillis = smsMessage.getTimestampMillis();
 
-                    Date date = new Date(timeMillis);
-                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
-                    String dateText = format.format(date);
+                Date date = new Date(timeMillis);
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
+                String dateText = format.format(date);
 
-                    smsMessageStr += address +" at "+"\t"+ dateText + "\n";
-                    smsMessageStr += smsBody + "\n";
-//                }
+                smsMessageStr += address +" at "+"\t"+ dateText + "\n";
+                smsMessageStr += smsBody + "\n";
             }
             Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
 
