@@ -29,7 +29,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
 
                 } else {
                     try {
-                        smsBody = newObj.decryptPrivateKey(smsBody, newObj.getPrivateKey());
+                        smsBody = newObj.decryptPrivateKey(smsBody, newObj.getPublicKey());
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(),
                                 "Decryption failed.",
