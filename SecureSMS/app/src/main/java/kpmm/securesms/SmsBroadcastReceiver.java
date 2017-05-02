@@ -18,7 +18,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
         Bundle intentExtras = intent.getExtras();
         if (intentExtras != null) {
             Object[] sms = (Object[]) intentExtras.get(SMS_BUNDLE);
-            Encryption newObj = new Encryption();
+            AESEncryption newObj = new AESEncryption();
             String smsMessageStr = "";
             for (int i = 0; i < sms.length; ++i) {
                 SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
@@ -26,7 +26,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 String smsBody = smsMessage.getMessageBody();
 
                 try {
-                    smsBody = newObj.encryptPrivateKey(smsBody, newObj.getPrivateKey());
+                    smsBody = newObj.decryptKey(smsBody, newObj.getSks());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -31,14 +31,14 @@ public class SendSmsActivity extends Activity {
 
     protected void sendSMS() {
         String toPhoneNumber = toPhoneNumberET.getText().toString();
-        Encryption newObj = new Encryption();
+        AESEncryption newObj = new AESEncryption();
         String smsMessage = "";
 
         try {
-            smsMessage = newObj.encryptPrivateKey(smsMessageET.getText().toString(), newObj.getPrivateKey());
+            smsMessage = newObj.encryptKey(smsMessageET.getText().toString(), newObj.getSks());
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(),
-                    "Encryption failed.",
+                    "AES failed.",
                     Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
@@ -58,7 +58,7 @@ public class SendSmsActivity extends Activity {
 
     protected void sendPublicKey() {
         String toPhoneNumber = toPhoneNumberET.getText().toString();
-        Encryption newObj = new Encryption();
+        RSAEncryption newObj = new RSAEncryption();
         String smsMessage = "!D34DB33F" + newObj.byte2hex(newObj.getPublicKey().getEncoded());
 
         try {
