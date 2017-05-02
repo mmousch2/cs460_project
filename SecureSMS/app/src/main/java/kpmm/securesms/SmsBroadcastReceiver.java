@@ -23,6 +23,16 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
                 SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
 
                 String smsBody = smsMessage.getMessageBody();
+
+                try {
+                    smsBody = newObj.encryptPrivateKey(smsBody, newObj.getPrivateKey());
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(),
+                            "Decryption failed.",
+                            Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+
                 String address = smsMessage.getOriginatingAddress();
                 long timeMillis = smsMessage.getTimestampMillis();
 
