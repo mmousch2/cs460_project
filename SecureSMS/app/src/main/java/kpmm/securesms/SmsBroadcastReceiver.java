@@ -25,9 +25,9 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
 
                 String smsBody = smsMessage.getMessageBody();
 
-                if (smsBody.startsWith("!D34DB33F")) {
-
-                } else {
+//                if (smsBody.startsWith("!D34DB33F")) {
+//                    String publicKey = substring(9, smsBody.length());
+//                } else {
                     try {
                         smsBody = newObj.decryptPrivateKey(smsBody, newObj.getPublicKey());
                     } catch (Exception e) {
@@ -46,7 +46,7 @@ public class SmsBroadcastReceiver extends BroadcastReceiver {
 
                     smsMessageStr += address +" at "+"\t"+ dateText + "\n";
                     smsMessageStr += smsBody + "\n";
-                }
+//                }
             }
             Toast.makeText(context, smsMessageStr, Toast.LENGTH_SHORT).show();
 

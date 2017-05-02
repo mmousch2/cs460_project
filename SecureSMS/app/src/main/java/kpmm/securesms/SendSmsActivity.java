@@ -32,10 +32,10 @@ public class SendSmsActivity extends Activity {
     protected void sendSMS() {
         String toPhoneNumber = toPhoneNumberET.getText().toString();
         Encryption newObj = new Encryption();
-        String smsMessage = smsMessageET.getText().toString();
+        String smsMessage = "";
 
         try {
-            smsMessage = newObj.encryptPrivateKey(smsMessage, newObj.getPrivateKey());
+            smsMessage = newObj.encryptPrivateKey(smsMessageET.getText().toString(), newObj.getPrivateKey());
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(),
                     "Encryption failed.",
