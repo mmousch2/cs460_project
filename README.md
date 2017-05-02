@@ -1,11 +1,18 @@
 # cs460_project
 Written by Margarita Mouschovias and Chi Kok Pin
 
-Current Status: static encryption implemented
+# Status
 
-Next feature: dynamic encryption
+AES encryption implemented - failing on decryption
 
-Requires API level 8 of Android to run.
+Likely cause - unable to store keys
+
+Currenty attempting to implement Android KeyStore, libraries not found
+
+
+
+
+Requires API level 8 of Android to run. (Possibly 23 after KeyStore.)
 
 
 
