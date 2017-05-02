@@ -2,9 +2,12 @@
 Written by Margarita Mouschovias and Chi Kok Pin
 
 Current Status: static encryption implemented
+
 Next feature: dynamic encryption
 
 Requires API level 8 of Android to run.
+
+
 
 
 # Editing Code
